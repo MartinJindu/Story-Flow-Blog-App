@@ -4,10 +4,6 @@ import Image from "next/image";
 
 const prisma = new PrismaClient();
 
-interface Props {
-  params: { slug: string };
-}
-
 // Fetch category and posts
 async function getCategory(slug: string) {
   return await prisma.category.findUnique({
@@ -16,7 +12,11 @@ async function getCategory(slug: string) {
   });
 }
 
-export default async function CategoryPage({ params }: Props) {
+export default async function CategoryPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const slug = (await params).slug;
   const category = await getCategory(slug);
 
