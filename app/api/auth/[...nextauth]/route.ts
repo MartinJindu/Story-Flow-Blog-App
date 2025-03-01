@@ -7,6 +7,14 @@ import { JWT } from "next-auth/jwt";
 
 const prisma = new PrismaClient();
 
+interface User {
+  id: string;
+  name: string;
+  role: string;
+  image: string | null;
+  username: string;
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -43,7 +51,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user?: any }) {
+    async jwt({ token, user }: { token: JWT; user?: User }) {
       if (user) {
         token.id = user.id as string;
         token.name = user.name as string;

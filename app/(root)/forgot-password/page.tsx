@@ -19,8 +19,12 @@ export default function RequestReset() {
     try {
       const response = await axios.post("/api/request-reset", { email });
       setMessage(response.data.message);
-    } catch (err: any) {
-      setError(err.response?.data?.error || "Something went wrong");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.error || "Something went wrong");
+      } else {
+        setError("Something went wrong");
+      }
     }
   };
 

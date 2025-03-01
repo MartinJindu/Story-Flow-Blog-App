@@ -52,9 +52,14 @@ export default function AuthForm({ type }: { type: "signin" | "signup" }) {
 
         router.push("/");
       }
-    } catch (error: any) {
-      setError(error.response?.data?.message || "Something went wrong");
-      toast.error(error.response?.data?.message);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.message || "Something went wrong");
+        toast.error(error.response?.data?.message);
+      } else {
+        setError("Something went wrong");
+        toast.error("Something went wrong");
+      }
     }
   };
 

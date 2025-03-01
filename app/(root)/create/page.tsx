@@ -77,7 +77,7 @@ export default function CreatePostPage() {
 
       toast.success("Post created successfully!");
       router.push("/posts");
-    } catch (error) {
+    } catch (_error) {
       setError("Failed to create post.");
       toast.error("Failed to create post. Please try again.");
     }

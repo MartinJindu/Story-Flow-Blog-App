@@ -7,7 +7,7 @@ import slugify from "slugify";
 const prisma = new PrismaClient();
 
 // ✅ Fetch all categories
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });

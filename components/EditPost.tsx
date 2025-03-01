@@ -29,7 +29,7 @@ export default function EditPostPage() {
   const { singlePost, loading } = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch<AppDispatch>();
 
-  const [post, setPost] = useState<Post | null>(null);
+  const [_post, setPost] = useState<Post | null>(null);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");

@@ -43,7 +43,7 @@ export default function AdminCommentsPage() {
     try {
       await axios.delete("/api/admin/comments", { data: { id } });
       setComments(comments.filter((c) => c.id !== id));
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to delete comment");
     }
   };

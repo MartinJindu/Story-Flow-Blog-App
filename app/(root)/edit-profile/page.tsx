@@ -31,7 +31,7 @@ export default function ProfilePage() {
       try {
         const res = await axios.get("/api/profile");
         setUser(res.data);
-      } catch (err) {
+      } catch (_err) {
         setError("Failed to load profile.");
       } finally {
         setLoading(false);
@@ -73,7 +73,7 @@ export default function ProfilePage() {
       });
 
       router.refresh();
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to update profile.");
     }
   };

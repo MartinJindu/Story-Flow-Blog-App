@@ -23,9 +23,7 @@ export default function SinglePostPage() {
   const { slug } = useParams();
   const router = useRouter();
   const { data: session } = useSession();
-  const { singlePost, loading, error } = useSelector(
-    (state: RootState) => state.post
-  );
+  const { singlePost, loading } = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch<AppDispatch>();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

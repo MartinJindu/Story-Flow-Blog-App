@@ -34,7 +34,7 @@ export async function GET(
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
 
     return NextResponse.json(post);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }
@@ -100,7 +100,7 @@ export async function PUT(
           })
         );
       }
-    } catch (error) {
+    } catch (_error) {
       return NextResponse.json(
         { error: "Failed to delete image from Cloudinary" },
         { status: 400 }
@@ -123,7 +123,7 @@ export async function PUT(
     });
 
     return NextResponse.json(updatedPost);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Failed to update post" },
       { status: 500 }
@@ -159,7 +159,7 @@ async function deletePostBySlug(slug: string, userId: string) {
         })
       );
     }
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Failed to delete image from Cloudinary" },
       { status: 400 }
@@ -183,7 +183,14 @@ export async function DELETE(
   try {
     await deletePostBySlug(slug, session.user?.id);
     return NextResponse.json({ message: "Post deleted successfully" });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    } else {
+      return NextResponse.json(
+        { message: "Post not deleted successfully" },
+        { status: 400 }
+      );
+    }
   }
 }

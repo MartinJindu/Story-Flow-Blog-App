@@ -21,7 +21,7 @@ export default function AdminCategoriesPage() {
       try {
         const res = await axios.get("/api/admin/categories");
         setCategories(res.data);
-      } catch (err) {
+      } catch (_err) {
         setError("Failed to fetch categories");
       }
     }
@@ -37,7 +37,7 @@ export default function AdminCategoriesPage() {
       });
       setCategories([...categories, res.data]);
       setNewCategory("");
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to create category");
     }
   };
@@ -55,7 +55,7 @@ export default function AdminCategoriesPage() {
         categories.map((c) => (c.id === editingCategory.id ? res.data : c))
       );
       setEditingCategory(null);
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to update category");
     }
   };
@@ -64,7 +64,7 @@ export default function AdminCategoriesPage() {
     try {
       await axios.delete("/api/admin/categories", { data: { id } });
       setCategories(categories.filter((c) => c.id !== id));
-    } catch (err) {
+    } catch (_err) {
       setError("Cannot delete category with posts");
     }
   };

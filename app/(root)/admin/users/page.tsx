@@ -23,7 +23,7 @@ export default function AdminUsersPage() {
       try {
         const res = await axios.get("/api/admin/users");
         setUsers(res.data);
-      } catch (err) {
+      } catch (_err) {
         setError("Failed to fetch users");
       } finally {
         setLoading(false);
@@ -38,7 +38,7 @@ export default function AdminUsersPage() {
       setUsers(
         users.map((u) => (u.id === userId ? { ...u, role: newRole } : u))
       );
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to update role");
     }
   };
@@ -47,7 +47,7 @@ export default function AdminUsersPage() {
     try {
       await axios.delete("/api/admin/users", { data: { userId } });
       setUsers(users.filter((u) => u.id !== userId));
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to delete user");
     }
   };

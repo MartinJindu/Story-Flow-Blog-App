@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ message: "View updated", views: newView });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: "View not updated" }, { status: 500 });
   }
 }
