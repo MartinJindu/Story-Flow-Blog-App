@@ -39,7 +39,7 @@ export default function UploadImage({
       );
 
       setImageUrl(uploadResponse.data.secure_url);
-    } catch (error) {
+    } catch (_error) {
       setError("Image upload failed. Please try again");
     } finally {
       setUploading(false);

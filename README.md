@@ -56,7 +56,7 @@
 ### **1️⃣ Clone the Repository**
 
 ```sh
-git clone https://github.com/yourusername/story-flow.git
+git clone https://github.com/MartinJindu/Story-Flow-Blog-App.git
 cd story-flow
 ```
 

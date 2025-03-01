@@ -25,8 +25,12 @@ export default function ResetPasswordPage() {
       });
       setMessage(res.data.message);
       setTimeout(() => router.push("/login"), 2000);
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Something went wrong");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || "Something went wrong");
+      } else {
+        setError("Something went wrong");
+      }
     }
   };
 

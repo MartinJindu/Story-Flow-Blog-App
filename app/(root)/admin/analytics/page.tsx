@@ -26,7 +26,8 @@ export default function AdminAnalyticsPage() {
       try {
         const res = await axios.get("/api/admin/analytics");
         setAnalytics(res.data);
-      } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_err) {
         setError("Failed to fetch analytics");
       }
     }

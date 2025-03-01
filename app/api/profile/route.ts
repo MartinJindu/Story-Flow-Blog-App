@@ -42,7 +42,7 @@ export async function GET() {
     }
 
     return NextResponse.json(user);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }
@@ -85,7 +85,7 @@ export async function PUT(req: Request) {
           })
         );
       }
-    } catch (error) {
+    } catch (_error) {
       return NextResponse.json(
         { error: "Failed to delete image from Cloudinary" },
         { status: 400 }
@@ -100,7 +100,7 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(updatedUser);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Failed to update profile" },
       { status: 500 }

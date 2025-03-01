@@ -23,7 +23,7 @@ export default function AdminPostsPage() {
       try {
         const res = await axios.get("/api/admin/posts");
         setPosts(res.data);
-      } catch (err) {
+      } catch (_err) {
         setError("Failed to fetch posts");
       } finally {
         setLoading(false);
@@ -40,7 +40,7 @@ export default function AdminPostsPage() {
           p.id === postId ? { ...p, featured: !currentStatus } : p
         )
       );
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to update featured status");
     }
   };
@@ -52,7 +52,7 @@ export default function AdminPostsPage() {
         data: { postId, imagePublicId: publicId },
       });
       setPosts(posts.filter((p) => p.id !== postId));
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to delete post");
     }
   };

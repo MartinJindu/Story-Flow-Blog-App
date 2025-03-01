@@ -7,7 +7,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   try {
     const timestamp = Math.round(new Date().getTime() / 1000);
     const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET!;
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     );
 
     return NextResponse.json({ timestamp, signature, uploadPreset });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Signature generation failed" },
       { status: 500 }

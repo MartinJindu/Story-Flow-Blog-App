@@ -12,7 +12,7 @@ import {
   RiDoubleQuotesL,
   RiMarkPenLine,
 } from "react-icons/ri";
-import { Editor, isActive } from "@tiptap/react";
+import { Editor } from "@tiptap/react";
 import { AiOutlineRedo, AiOutlineUndo, AiOutlineMinus } from "react-icons/ai";
 import { BsTypeUnderline } from "react-icons/bs";
 import { IoListOutline } from "react-icons/io5";
