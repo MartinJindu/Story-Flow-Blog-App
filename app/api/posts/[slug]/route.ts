@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import slugify from "slugify";
 import crypto from "crypto";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/option";
 import axios from "axios";
 
 const prisma = new PrismaClient();
