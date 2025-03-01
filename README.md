@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **Story Flow - A Modern Blogging Platform**
 
-## Getting Started
+🚀 **Story Flow** is a sleek and powerful blogging platform built with **Next.js**, **Prisma**, and **PostgreSQL**. It offers a seamless experience for both writers and readers, making content creation effortless and engaging.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🌟 **Features**
+
+### ✅ **For Readers**
+
+- Browse published articles with a clean and responsive UI
+- Read engaging blog posts with a distraction-free experience
+- Explore content by category and author
+- View post analytics (comments)
+
+### ✍️ **For Writers**
+
+- Create, edit, and manage blog posts with a **rich text editor (Tiptap)**
+- Upload and manage images using **Cloudinary**
+- Save drafts before publishing
+- See a **"Draft" badge** on unpublished posts (visible only to authors)
+
+### 🔐 **Authentication & Security**
+
+- **NextAuth (Credentials Provider)** for secure login and signup
+- **Password Reset** via email using **Brevo (formerly Sendinblue)**
+- **CSRF Protection & XSS Prevention** for enhanced security
+
+### ⚙️ **Admin Features**
+
+- **User Management** (assign roles, manage users)
+- **Post Moderation** (delete inappropriate content)
+- **Category Management** (add/edit blog categories)
+
+---
+
+## 🛠 **Tech Stack**
+
+| **Technology**         | **Usage**                                     |
+| ---------------------- | --------------------------------------------- |
+| **Next.js**            | Full-stack framework for SSR and routing      |
+| **TypeScript**         | Type safety and improved developer experience |
+| **Prisma**             | ORM for database interactions                 |
+| **PostgreSQL (Neon)**  | Cloud-based relational database               |
+| **NextAuth**           | Authentication and session management         |
+| **Redux Toolkit**      | State management                              |
+| **Cloudinary**         | Image storage and optimization                |
+| **Tiptap**             | Rich text editor for content creation         |
+| **Tailwind CSS**       | Modern styling framework                      |
+| **Brevo (Sendinblue)** | Email service for password resets             |
+
+---
+
+## 🚀 **Getting Started**
+
+### **1️⃣ Clone the Repository**
+
+```sh
+git clone https://github.com/yourusername/story-flow.git
+cd story-flow
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **2️⃣ Install Dependencies**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **3️⃣ Set Up Environment Variables**
 
-## Learn More
+Create a `.env.local` file and configure the following:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+DATABASE_URL="your_postgres_database_url"
+NEXTAUTH_SECRET="your_nextauth_secret"
+NEXTAUTH_URL="http://localhost:3000"
+BREVO_API_KEY="your_brevo_api_key"
+CLOUDINARY_CLOUD_NAME="your_cloudinary_name"
+CLOUDINARY_API_KEY="your_cloudinary_api_key"
+CLOUDINARY_API_SECRET="your_cloudinary_api_secret"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **4️⃣ Run the Development Server**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sh
+npm run dev
+```
 
-## Deploy on Vercel
+Your app will be running at **http://localhost:3000** 🎉
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📢 **Contributing**
+
+Contributions are welcome! Feel free to submit **issues** or **pull requests**.
+
+---
+
+## 📄 **License**
+
+This project is **open-source** under the **MIT License**.
+
+---
+
+🔗 **Follow for updates & support:**
+
+- ✉️ **Email:** [martinchijindu@gmail.com]
+- 🌐 **Website:** [Your Website]
+- 🐙 **GitHub:** [Your GitHub Profile]

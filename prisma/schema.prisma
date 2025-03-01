@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String    @id @default(cuid())
+  name             String
+  username         String    @unique
+  email            String    @unique
+  password         String // store hashed password
+  image            String?
+  bio              String?
+  role             Role      @default(USER) // Added role (ADMIN, USER)
+  posts            Post[]
+  comments         Comment[]
+  resetToken       String?   @unique //for password reset
+  resetTokenExpiry DateTime? //for password reset
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  content     String
+  description String?
+  postImage   String?
+  featured    Boolean   @default(false)
+  published   Boolean   @default(false) // Allows drafts
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  comments    Comment[]
+  likes       Int       @default(0) // Track likes
+  views       Int       @default(0) // Track number of views
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique @default("") // Can be auto-generated in API
+  posts Post[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  ADMIN
+  USER
+}
