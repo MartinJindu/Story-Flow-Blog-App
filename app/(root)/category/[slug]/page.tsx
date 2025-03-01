@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 
 const prisma = new PrismaClient();
 
@@ -12,13 +13,9 @@ async function getCategory(slug: string) {
   });
 }
 
-export default async function CategoryPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const slug = (await params).slug;
-  const category = await getCategory(slug);
+export default async function CategoryPage() {
+  const { slug } = useParams();
+  const category = await getCategory(slug as string);
 
   if (!category) {
     return (
