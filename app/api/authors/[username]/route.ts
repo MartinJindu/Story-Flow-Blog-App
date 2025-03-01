@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { username: string } }
+  { params }: { params: Promise<{ username: string }> }
 ) {
   const session = await getServerSession(authOptions);
   const loggedInUserId = session?.user?.id; // Get logged-in user's ID
