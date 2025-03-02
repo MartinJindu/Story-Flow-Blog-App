@@ -5,6 +5,7 @@ import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export default function RequestReset() {
   const [email, setEmail] = useState("");
@@ -19,6 +20,7 @@ export default function RequestReset() {
     try {
       const response = await axios.post("/api/request-reset", { email });
       setMessage(response.data.message);
+      toast.success(response.data.message);
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.error || "Something went wrong");
