@@ -35,7 +35,7 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="flex  items-center justify-center mt-10">
+    <div className="flex  items-center justify-center py-10 mt-10">
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           type="password"
