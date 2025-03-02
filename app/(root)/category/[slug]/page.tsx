@@ -1,22 +1,25 @@
 "use client";
-import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Category } from "@/lib/definitions";
 
-const prisma = new PrismaClient();
-
-// Fetch category and posts
-async function getCategory(slug: string) {
-  return await prisma.category.findUnique({
-    where: { slug },
-    include: { posts: { include: { author: true } } }, // Include posts & authors
-  });
-}
-
-export default async function CategoryPage() {
+export default function CategoryPage() {
   const { slug } = useParams();
-  const category = await getCategory(slug as string);
+  const [category, setCategory] = useState<Category>();
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const { data } = await axios.get(`/api/categories/${slug}`);
+
+        setCategory(data);
+      } catch (_error) {}
+    };
+    fetchCategory();
+  }, [slug]);
 
   if (!category) {
     return (
