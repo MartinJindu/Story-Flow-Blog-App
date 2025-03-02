@@ -1,16 +1,16 @@
-import Brevo from "@getbrevo/brevo";
-
-const brevo = new Brevo.TransactionalEmailsApi();
-brevo.setApiKey(
-  Brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY as string
-);
+import * as Brevo from "@getbrevo/brevo";
 
 const sendResetEmail = async (
   email: string,
   token: string,
   username: string
 ) => {
+  const brevo = new Brevo.TransactionalEmailsApi();
+  brevo.setApiKey(
+    Brevo.TransactionalEmailsApiApiKeys.apiKey,
+    process.env.BREVO_API_KEY as string
+  );
+
   const sendSmtpEmail = new Brevo.SendSmtpEmail();
   const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password/${token}`;
 
