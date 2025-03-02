@@ -54,7 +54,6 @@ export const fetchSinglePost = createAsyncThunk(
   async (slug: string, thunkAPI) => {
     try {
       const { data } = await axios.get(`/api/posts/${slug}`);
-      console.log(data);
 
       return data;
     } catch (error) {
