@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { getCategory } from "@/StoreSlices/Category/categorySlice";
 import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const { categories } = useSelector((state: RootState) => state.category);
@@ -77,20 +78,28 @@ export default function Navbar() {
                 <IoMdArrowDropdown className="ml-1 size-5" />
               )}
             </button>
-            {categoryDropdown && (
-              <div className="absolute bg-gray-800 text-white mt-2 rounded shadow-lg w-40 z-10">
-                {categories.map((category: Category) => (
-                  <Link
-                    key={category.id}
-                    href={`/category/${category.slug}`}
-                    onClick={handleNavClick}
-                    className="block px-4 py-2 hover:bg-gray-700"
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </div>
-            )}
+            <AnimatePresence>
+              {categoryDropdown && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute bg-gray-800 text-white mt-2 rounded shadow-lg w-40 z-10"
+                >
+                  {categories.map((category: Category) => (
+                    <Link
+                      key={category.id}
+                      href={`/category/${category.slug}`}
+                      onClick={handleNavClick}
+                      className="block px-4 py-2 hover:bg-gray-700"
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {session ? (
@@ -118,28 +127,35 @@ export default function Navbar() {
                   <IoMdArrowDropdown className="ml-1 size-5" />
                 )}
               </button>
-
-              {profileDropdown && (
-                <div className="absolute right-0 bg-gray-800 text-white mt-2 rounded shadow-lg w-40 z-10">
-                  <Link
-                    href={`/author/${session.user.username}`}
-                    className="block px-4 py-2 hover:bg-gray-700"
-                    onClick={handleNavClick}
+              <AnimatePresence>
+                {profileDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute right-0 bg-gray-800 text-white mt-2 rounded shadow-lg w-40 z-10"
                   >
-                    Profile
-                  </Link>
-                  <button
-                    onClick={async () => {
-                      await signOut();
-                      toast.success("Logged out");
-                      setProfileDropdown(false);
-                    }}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-700"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
+                    <Link
+                      href={`/author/${session.user.username}`}
+                      className="block px-4 py-2 hover:bg-gray-700"
+                      onClick={handleNavClick}
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      onClick={async () => {
+                        await signOut();
+                        toast.success("Logged out");
+                        setProfileDropdown(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 hover:bg-gray-700"
+                    >
+                      Logout
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ) : (
             <>
@@ -156,110 +172,130 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden focus:outline-none"
+          className="md:hidden focus:outline-none transition-transform duration-1000"
         >
-          {isOpen ? <HiX size={28} /> : <HiMenu size={28} />}
+          {isOpen ? (
+            <HiX size={28} className="rotate-90" />
+          ) : (
+            <HiMenu size={28} />
+          )}
         </button>
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-gray-800 mt-2 rounded-lg py-2 text-center">
-          <Link
-            href="/create"
-            className="block py-2 hover:text-gray-300"
-            onClick={handleNavClick}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden bg-gray-800 mt-2 rounded-lg py-2 text-center overflow-hidden"
           >
-            Create Post
-          </Link>
-          <Link
-            href="/posts"
-            className="block py-2 hover:text-gray-300"
-            onClick={handleNavClick}
-          >
-            Posts
-          </Link>
-
-          {/* Mobile Categories Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setCategoryDropdown(!categoryDropdown)}
-              className="flex justify-center items-center w-full py-2 hover:text-gray-300"
+            <Link
+              href="/create"
+              className="block py-2 hover:text-gray-300"
+              onClick={handleNavClick}
             >
-              Categories{" "}
-              {categoryDropdown ? (
-                <IoMdArrowDropup className=" size-5" />
-              ) : (
-                <IoMdArrowDropdown className=" size-5" />
-              )}
-            </button>
-            {categoryDropdown && (
-              <div className=" flex flex-col justify-center items-center bg-gray-900 text-white mt-1 rounded-lg text-left px-4">
-                {categories.map((category: Category) => (
-                  <Link
-                    key={category.id}
-                    href={`/category/${category.slug}`}
-                    className="block py-2 hover:bg-gray-700"
-                    onClick={handleNavClick}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+              Create Post
+            </Link>
+            <Link
+              href="/posts"
+              className="block py-2 hover:text-gray-300"
+              onClick={handleNavClick}
+            >
+              Posts
+            </Link>
 
-          {session ? (
-            <div className="mt-2 flex flex-col items-center">
-              {session.user.image ? (
-                <Image
-                  src={session.user?.image}
-                  alt="User"
-                  width={40}
-                  height={40}
-                  className="w-16 h-16 rounded-full border-2 border-gray-500 hover:border-white transition"
-                />
-              ) : (
-                <DefaultAvatar username={session.user.name} />
-              )}
-              <Link
-                href={`/author/${session.user.username}`}
-                className="block py-2 hover:text-gray-300"
-                onClick={handleNavClick}
-              >
-                Profile
-              </Link>
+            {/* Mobile Categories Dropdown */}
+            <div className="relative">
               <button
-                onClick={async () => {
-                  await signOut();
-                  toast.success("Logged out");
-                  setIsOpen(false);
-                }}
-                className="block py-2 hover:text-gray-300 w-full"
+                onClick={() => setCategoryDropdown(!categoryDropdown)}
+                className="flex justify-center items-center w-full py-2 hover:text-gray-300"
               >
-                Logout
+                Categories{" "}
+                {categoryDropdown ? (
+                  <IoMdArrowDropup className=" size-5" />
+                ) : (
+                  <IoMdArrowDropdown className=" size-5" />
+                )}
               </button>
+              <AnimatePresence>
+                {categoryDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className=" flex flex-col bg-gray-900 text-white mt-1 rounded-lg  px-4"
+                  >
+                    {categories.map((category: Category) => (
+                      <Link
+                        key={category.id}
+                        href={`/category/${category.slug}`}
+                        className="block py-2 hover:bg-gray-700"
+                        onClick={handleNavClick}
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className="block py-2 hover:text-gray-300"
-                onClick={handleNavClick}
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="block py-2 hover:text-gray-300"
-                onClick={handleNavClick}
-              >
-                Register
-              </Link>
-            </>
-          )}
-        </div>
-      )}
+
+            {session ? (
+              <div className="mt-2 flex flex-col items-center">
+                {session.user.image ? (
+                  <Image
+                    src={session.user?.image}
+                    alt="User"
+                    width={40}
+                    height={40}
+                    className="w-16 h-16 rounded-full border-2 border-gray-500 hover:border-white transition"
+                  />
+                ) : (
+                  <DefaultAvatar username={session.user.name} />
+                )}
+                <Link
+                  href={`/author/${session.user.username}`}
+                  className="block py-2 hover:text-gray-300"
+                  onClick={handleNavClick}
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={async () => {
+                    await signOut();
+                    toast.success("Logged out");
+                    setIsOpen(false);
+                  }}
+                  className="block py-2 hover:text-gray-300 w-full"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="block py-2 hover:text-gray-300"
+                  onClick={handleNavClick}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="block py-2 hover:text-gray-300"
+                  onClick={handleNavClick}
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import logo from "../public/blog.webp";
 import { AppDispatch, RootState } from "@/store";
 import { getCategory } from "@/StoreSlices/Category/categorySlice";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Footer() {
   const { categories } = useSelector((state: RootState) => state.category);
@@ -60,21 +61,28 @@ export default function Footer() {
                   <IoMdArrowDropdown size={18} />
                 )}
               </button>
-
-              {categoryDropdown && (
-                <div className="absolute left-0 bg-gray-800 text-white mt-2 rounded shadow-lg w-40 z-10">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.id}
-                      href={`/category/${category.slug}`}
-                      className="block px-4 py-2 hover:bg-gray-700"
-                      onClick={() => setCategoryDropdown(false)}
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
+              <AnimatePresence>
+                {categoryDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="absolute left-0 bg-gray-800 text-white mt-2 rounded shadow-lg w-40 z-10"
+                  >
+                    {categories.map((category) => (
+                      <Link
+                        key={category.id}
+                        href={`/category/${category.slug}`}
+                        className="block px-4 py-2 hover:bg-gray-700"
+                        onClick={() => setCategoryDropdown(false)}
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <Link href="/about" className="hover:text-white">

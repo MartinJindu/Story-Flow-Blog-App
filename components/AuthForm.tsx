@@ -23,12 +23,14 @@ export default function AuthForm({ type }: { type: "signin" | "signup" }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    const trimmedName = name.trim();
+    const trimmedUsername = username.trim();
 
     try {
       if (type === "signup") {
         await axios.post("/api/auth/signup", {
-          name,
-          username,
+          name: trimmedName,
+          username: trimmedUsername,
           email,
           password,
         });
