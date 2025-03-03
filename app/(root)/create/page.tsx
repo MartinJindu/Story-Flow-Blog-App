@@ -62,11 +62,12 @@ export default function CreatePostPage() {
       toast.error("Please fill required* fields");
       return;
     }
+    const trimmedTitle = title.trim();
 
     try {
       await dispatch(
         createPost({
-          title,
+          title: trimmedTitle,
           content,
           categoryId,
           postImage,
