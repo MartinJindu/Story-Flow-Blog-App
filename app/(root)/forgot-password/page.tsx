@@ -31,7 +31,7 @@ export default function RequestReset() {
   };
 
   return (
-    <div className="flex items-center justify-center py-10 bg-gray-100">
+    <div className="flex min-h-screen items-center justify-center py-10 bg-gray-100">
       <Card className="w-full max-w-md p-6 shadow-lg rounded-lg">
         <CardHeader>
           <CardTitle className="text-center text-2xl font-semibold">

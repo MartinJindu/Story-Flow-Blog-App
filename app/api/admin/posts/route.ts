@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/option";
 
 const prisma = new PrismaClient();
 
-// ✅ Fetch all posts (Admin only)
+// Fetch all posts (Admin only)
 export async function GET(_req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {
@@ -29,7 +29,7 @@ export async function GET(_req: NextRequest) {
   return NextResponse.json(posts);
 }
 
-// ✅ Toggle featured status (Admin only)
+// Toggle featured status (Admin only)
 export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {
@@ -49,7 +49,7 @@ export async function PUT(req: NextRequest) {
   return NextResponse.json(updatedPost);
 }
 
-// ✅ Delete post and remove image from Cloudinary
+// Delete post and remove image from Cloudinary
 export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {

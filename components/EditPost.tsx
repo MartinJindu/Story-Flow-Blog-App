@@ -14,6 +14,7 @@ import { AppDispatch, RootState } from "@/store";
 import { getCategory } from "@/StoreSlices/Category/categorySlice";
 import { fetchSinglePost } from "@/StoreSlices/Post/postSlice";
 import CreatePostSkeleton from "./skeleton/CreatePostSkeleton";
+import UploadImage from "./UploadImage";
 import Image from "next/image";
 
 // Dynamically import Tiptap
@@ -34,7 +35,6 @@ export default function EditPostPage() {
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
   const [postImage, setPostImage] = useState("");
-  const [imageUploading, setImageUploading] = useState(false);
   const [description, setDescription] = useState("");
   const [published, setPublished] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -61,44 +61,13 @@ export default function EditPostPage() {
     dispatch(getCategory());
   }, []);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setImageUploading(true);
-
-    try {
-      // 1️⃣ Get signature from server
-      const { data } = await axios.get("/api/upload");
-      const { timestamp, signature, cloudName, uploadPreset } = data;
-
-      // 2️⃣ Upload image to Cloudinary
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", uploadPreset);
-      formData.append("timestamp", timestamp);
-      formData.append("signature", signature);
-      formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!);
-
-      const uploadResponse = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
-      );
-
-      setPostImage(uploadResponse.data.secure_url);
-    } catch (error) {
-      console.error("Image upload failed:", error);
-    } finally {
-      setImageUploading(false);
-    }
-  };
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
+    const trimmedTitle = title.trim();
     try {
       const { data } = await axios.put(`/api/posts/${slug}`, {
-        title,
+        title: trimmedTitle,
         categoryId: category,
         content,
         published,
@@ -160,13 +129,7 @@ export default function EditPostPage() {
 
         <div>
           <Label htmlFor="postImage">Post Image</Label>
-          <Input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="cursor-pointer"
-          />
-          {imageUploading && <p>Uploading image...</p>}
+          <UploadImage setImageUrl={setPostImage} />
         </div>
 
         {postImage && (

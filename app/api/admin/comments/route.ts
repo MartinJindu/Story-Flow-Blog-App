@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/option";
 
 const prisma = new PrismaClient();
 
-// ✅ Fetch comments (filter by post title)
+// Fetch comments (filter by post title)
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== "ADMIN") {
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(comments);
 }
 
-// ✅ Delete a comment
+// Delete a comment
 export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {

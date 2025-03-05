@@ -3,18 +3,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-
-interface Post {
-  id: string;
-  title: string;
-  featured: boolean;
-  postImage: string;
-  createdAt: string;
-  author: { name: string };
-}
+import { AdminPost } from "@/lib/definitions";
 
 export default function AdminPostsPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<AdminPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -36,8 +28,8 @@ export default function AdminPostsPage() {
     try {
       await axios.put("/api/admin/posts", { postId, featured: !currentStatus });
       setPosts(
-        posts.map((p) =>
-          p.id === postId ? { ...p, featured: !currentStatus } : p
+        posts.map((post) =>
+          post.id === postId ? { ...post, featured: !currentStatus } : post
         )
       );
     } catch (_err) {
@@ -51,7 +43,7 @@ export default function AdminPostsPage() {
       await axios.delete("/api/admin/posts", {
         data: { postId, imagePublicId: publicId },
       });
-      setPosts(posts.filter((p) => p.id !== postId));
+      setPosts(posts.filter((post) => post.id !== postId));
     } catch (_err) {
       setError("Failed to delete post");
     }

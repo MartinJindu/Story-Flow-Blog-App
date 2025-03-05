@@ -66,7 +66,7 @@ export default function AuthForm({ type }: { type: "signin" | "signup" }) {
   };
 
   return (
-    <div className="flex items-center justify-center py-10 bg-gray-100">
+    <div className="flex min-h-screen items-center justify-center py-10 bg-gray-100">
       <Card className="w-full max-w-md p-6 shadow-lg rounded-lg">
         <CardHeader className="justify-center items-center">
           <Image

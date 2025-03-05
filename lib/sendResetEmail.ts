@@ -1,5 +1,8 @@
 import * as Brevo from "@getbrevo/brevo";
 
+/**
+ * To send real-time email to users for password reset using brevo
+ */
 const sendResetEmail = async (
   email: string,
   token: string,

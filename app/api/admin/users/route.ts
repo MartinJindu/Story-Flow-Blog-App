@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/option";
 
 const prisma = new PrismaClient();
 
-// ✅ Fetch all users (Admin only)
+// Fetch all users (Admin only)
 export async function GET(_req: NextRequest) {
   const session = await getServerSession(authOptions);
 
@@ -26,7 +26,7 @@ export async function GET(_req: NextRequest) {
   return NextResponse.json(users);
 }
 
-// ✅ Update user role (Admin only)
+// Update user role (Admin only)
 export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {
@@ -47,7 +47,7 @@ export async function PUT(req: NextRequest) {
   return NextResponse.json(updatedUser);
 }
 
-// ✅ Delete user (Admin only)
+// Delete user (Admin only)
 export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {

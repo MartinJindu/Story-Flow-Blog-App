@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ResetPasswordPage() {
   const [newPassword, setNewPassword] = useState("");
@@ -35,20 +36,30 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="flex  items-center justify-center py-10 mt-10">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          type="password"
-          placeholder="New Password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-          className="px-10"
-        />
-        {message && <p className="text-green-500">{message}</p>}
-        {error && <p className="text-red-500">{error}</p>}
-        <Button type="submit">Reset Password</Button>
-      </form>
+    <div className="flex min-h-screen items-center justify-center py-10 bg-gray-100">
+      <Card className="w-full max-w-md p-6 shadow-lg rounded-lg">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl font-semibold">
+            Enter New Password
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              type="email"
+              placeholder="Enter password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+            {message && <p className="text-green-500 text-sm">{message}</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <Button className="w-full" type="submit">
+              Reset Password
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }
