@@ -6,7 +6,7 @@ import slugify from "slugify";
 
 const prisma = new PrismaClient();
 
-// ✅ Fetch all categories
+// Fetch all categories
 export async function GET(_req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {
@@ -25,7 +25,7 @@ export async function GET(_req: NextRequest) {
   return NextResponse.json(categories);
 }
 
-// ✅ Create new category
+// Create new category
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json(category);
 }
 
-// ✅ Update category name
+// Update category name
 export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {
@@ -74,7 +74,7 @@ export async function PUT(req: NextRequest) {
   return NextResponse.json(updatedCategory);
 }
 
-// ✅ Delete category (only if no posts are linked)
+// Delete category (only if no posts are linked)
 export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session || session.user?.role !== "ADMIN") {

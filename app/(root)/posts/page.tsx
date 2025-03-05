@@ -21,7 +21,7 @@ export default function BlogPostsPage() {
     dispatch(fetchAllPost());
   }, []);
 
-  if (loading) return <LatestPostsSkeleton title="Post" />;
+  if (loading) return <LatestPostsSkeleton title="Posts" />;
   if (error) return <p>{error}</p>;
 
   return (

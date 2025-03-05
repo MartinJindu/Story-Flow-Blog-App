@@ -1,18 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-interface Comment {
-  id: string;
-  content: string;
-  createdAt: string;
-  author: { id: string; name: string; username: string; image?: string };
-}
-
-interface CommentState {
-  loading: boolean;
-  comments: Comment[];
-  error: string | null;
-}
+import { CommentState } from "@/lib/definitions";
 
 const initialState: CommentState = {
   loading: false,

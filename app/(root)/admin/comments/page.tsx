@@ -2,17 +2,10 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-interface Comment {
-  id: string;
-  content: string;
-  post: { title: string };
-  author: { name: string; email: string };
-  createdAt: string;
-}
+import { AdminComment } from "@/lib/definitions";
 
 export default function AdminCommentsPage() {
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<AdminComment[]>([]);
   const [searchTitle, setSearchTitle] = useState("");
   const [error, setError] = useState("");
 
@@ -42,7 +35,7 @@ export default function AdminCommentsPage() {
   const deleteComment = async (id: string) => {
     try {
       await axios.delete("/api/admin/comments", { data: { id } });
-      setComments(comments.filter((c) => c.id !== id));
+      setComments(comments.filter((comment) => comment.id !== id));
     } catch (_err) {
       setError("Failed to delete comment");
     }

@@ -1,37 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  content: string;
-  description: string;
-  postImage?: string;
-  featured: boolean;
-  published: boolean;
-  authorId: string;
-  categoryId: string;
-  category: { id: string; name: string; slug: string };
-  author: { name: string; username?: string };
-  createdAt: string;
-}
-
-// Define the initial state
-interface PostState {
-  posts: Post[];
-  singlePost: Post | null;
-
-  loading: boolean;
-  error: string | null;
-}
+import { PostState } from "@/lib/definitions";
 
 const initialState: PostState = {
   loading: false,
   posts: [],
   singlePost: null,
-
   error: "",
 };
 

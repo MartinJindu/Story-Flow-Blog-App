@@ -2,18 +2,14 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  posts: { id: string }[];
-}
+import { AdminCategory } from "@/lib/definitions";
 
 export default function AdminCategoriesPage() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<AdminCategory[]>([]);
   const [newCategory, setNewCategory] = useState("");
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(
+    null
+  );
   const [error, setError] = useState("");
 
   useEffect(() => {

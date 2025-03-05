@@ -1,30 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-interface Author {
-  id: string;
-  name: string;
-  username: string;
-  image?: string;
-  bio?: string;
-}
-
-interface AuthorPost {
-  id: string;
-  title: string;
-  slug: string;
-  published: boolean;
-  category: { name: string };
-  createdAt: string;
-}
-
-interface AuthorState {
-  author: Author | null;
-  posts: AuthorPost[];
-  totalPages: number;
-  loading: boolean;
-  error: string | null;
-}
+import { AuthorState } from "@/lib/definitions";
 
 const initialState: AuthorState = {
   author: null,

@@ -9,18 +9,12 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { FeaturedPosts } from "@/lib/definitions";
 import FeaturedPostSkeleton from "./skeleton/FeaturedPostSkeleton";
 import defaultPostImage from "@/public/default_post_image.webp";
 
-interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  postImage: string;
-}
-
 const FeaturedPost = () => {
-  const [featuredPosts, setFeaturedPosts] = useState<Post[]>([]);
+  const [featuredPosts, setFeaturedPosts] = useState<FeaturedPosts[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

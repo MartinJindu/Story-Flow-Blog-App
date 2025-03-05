@@ -2,20 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-interface AnalyticsData {
-  totalUsers: number;
-  totalPosts: number;
-  totalComments: number;
-  totalViews: number;
-  mostPopularPosts: { id: string; title: string; views: number }[];
-  mostActiveAuthors: {
-    id: string;
-    name: string;
-    username: string;
-    _count: { posts: number };
-  }[];
-}
+import { AnalyticsData } from "@/lib/definitions";
 
 export default function AdminAnalyticsPage() {
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
@@ -26,7 +13,6 @@ export default function AdminAnalyticsPage() {
       try {
         const res = await axios.get("/api/admin/analytics");
         setAnalytics(res.data);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_err) {
         setError("Failed to fetch analytics");
       }
@@ -60,6 +46,7 @@ export default function AdminAnalyticsPage() {
         </div>
       </div>
 
+      {/* Popular post */}
       <h2 className="text-xl font-bold mt-6">🔥 Most Popular Posts</h2>
       <ul className="mt-2 border rounded-lg p-4 bg-white">
         {analytics.mostPopularPosts.map((post) => (
@@ -70,6 +57,7 @@ export default function AdminAnalyticsPage() {
         ))}
       </ul>
 
+      {/* Active Authors */}
       <h2 className="text-xl font-bold mt-6">💡 Most Active Authors</h2>
       <ul className="mt-2 border rounded-lg p-4 bg-white">
         {analytics.mostActiveAuthors.map((author) => (

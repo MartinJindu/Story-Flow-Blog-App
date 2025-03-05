@@ -4,16 +4,9 @@ import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 import { Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
+import { User } from "./definitions";
 
 const prisma = new PrismaClient();
-
-interface User {
-  id: string;
-  name: string;
-  role: string;
-  image: string | null;
-  username: string;
-}
 
 export const authOptions: NextAuthOptions = {
   providers: [

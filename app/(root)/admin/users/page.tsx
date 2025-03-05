@@ -3,18 +3,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  username: string;
-  role: "ADMIN" | "USER";
-}
+import { AdminUser } from "@/lib/definitions";
 
 export default function AdminUsersPage() {
   const { data: session } = useSession();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -36,7 +29,9 @@ export default function AdminUsersPage() {
     try {
       await axios.put("/api/admin/users", { userId, role: newRole });
       setUsers(
-        users.map((u) => (u.id === userId ? { ...u, role: newRole } : u))
+        users.map((user) =>
+          user.id === userId ? { ...user, role: newRole } : user
+        )
       );
     } catch (_err) {
       setError("Failed to update role");
@@ -46,7 +41,7 @@ export default function AdminUsersPage() {
   const deleteUser = async (userId: string) => {
     try {
       await axios.delete("/api/admin/users", { data: { userId } });
-      setUsers(users.filter((u) => u.id !== userId));
+      setUsers(users.filter((user) => user.id !== userId));
     } catch (_err) {
       setError("Failed to delete user");
     }

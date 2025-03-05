@@ -105,5 +105,4 @@ This project is **open-source** under the **MIT License**.
 🔗 **Follow for updates & support:**
 
 - ✉️ **Email:** [martinchijindu@gmail.com]
-- 🌐 **Website:** [Your Website]
-- 🐙 **GitHub:** [Your GitHub Profile]
+- 🌐 **Website:** [(https://story-flow-blog-app.vercel.app/)]

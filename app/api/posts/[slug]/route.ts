@@ -1,20 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import slugify from "slugify";
-import crypto from "crypto";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/option";
 import axios from "axios";
+import { deleteImageOnCloudinary } from "@/lib/utils";
 
 const prisma = new PrismaClient();
-
-function generateSignature(publicId: string) {
-  const timestamp = Math.floor(Date.now() / 1000);
-  const apiSecret = process.env.CLOUDINARY_API_SECRET!;
-
-  const signatureString = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
-  return crypto.createHash("sha256").update(signatureString).digest("hex");
-}
 
 export async function GET(
   _req: Request,
@@ -87,18 +79,9 @@ export async function PUT(
     }
 
     try {
-      // Extract public_id from Cloudinary URL
+      // delete existing image post when new one is uploaded
       if (existingPost.postImage) {
-        const publicId = existingPost.postImage.split("/").pop()?.split(".")[0]; // Extract public_id
-        await axios.post(
-          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/destroy`,
-          new URLSearchParams({
-            public_id: publicId!,
-            api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!,
-            timestamp: String(Math.floor(Date.now() / 1000)),
-            signature: generateSignature(publicId!), // Generates a signature
-          })
-        );
+        deleteImageOnCloudinary(existingPost.postImage);
       }
     } catch (_error) {
       return NextResponse.json(
@@ -146,18 +129,9 @@ async function deletePostBySlug(slug: string, userId: string) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   try {
-    // Extract public_id from Cloudinary URL
+    // delete post image on cloudinary
     if (post.postImage) {
-      const publicId = post.postImage.split("/").pop()?.split(".")[0]; // Extract public_id
-      await axios.post(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/destroy`,
-        new URLSearchParams({
-          public_id: publicId!,
-          api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!,
-          timestamp: String(Math.floor(Date.now() / 1000)),
-          signature: generateSignature(publicId!), // Generates a signature
-        })
-      );
+      await deleteImageOnCloudinary(post.postImage);
     }
   } catch (_error) {
     return NextResponse.json(

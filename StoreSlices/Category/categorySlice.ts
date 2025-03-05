@@ -1,12 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Category } from "@/lib/definitions";
-
-interface CategoryState {
-  loading: boolean;
-  categories: Category[];
-  error: string | null;
-}
+import { CategoryState } from "@/lib/definitions";
 
 const initialState: CategoryState = {
   loading: false,
