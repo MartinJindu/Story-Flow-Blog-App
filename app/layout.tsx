@@ -13,11 +13,15 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+const blogInfo = {
+  name: "Story Flow",
+  author: "Chijindu Okpalanweze",
   title: "Story Flow - Unleash Your Creativity",
   description:
-    "Story Flow is a modern blogging platform where you can share your thoughts, stories, and experiences with the world.",
-  authors: [{ name: "Chijindu Okpalanweze" }],
+    "Modern blogging platform where you can share your thoughts, stories, and experiences with the world.",
+  url: "https://story-flow-blog-app.vercel.app/",
+  image: `https://story-flow-blog-app.vercel.app/opengraph-image.png`,
+  twitterHandle: "@MartinJindu",
   keywords: [
     "Story Flow",
     "blog",
@@ -29,9 +33,54 @@ export const metadata: Metadata = {
     "storytelling",
     "personal blog",
   ],
-  creator: "Chijindu Okpalanweze",
-  publisher: "Story Flow",
-  applicationName: "Story Flow",
+};
+
+export const metadata: Metadata = {
+  title: {
+    default: `${blogInfo.title}`,
+    template: `%s | ${blogInfo.name}`,
+  },
+  description: blogInfo.description,
+
+  authors: [{ name: blogInfo.author, url: blogInfo.url }],
+  creator: blogInfo.author,
+
+  keywords: blogInfo.keywords,
+  publisher: "Chijindu Okpalanweze",
+  applicationName: "Chijindu's Portfolio",
+
+  // Canonical URL
+  metadataBase: new URL(blogInfo.url as string),
+  alternates: {
+    canonical: "/",
+  },
+
+  // Open Graph metadata for social sharing
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: blogInfo.url,
+    title: ` ${blogInfo.title}`,
+    description: blogInfo.description,
+    siteName: `${blogInfo.name} Blog`,
+    images: [
+      {
+        url: blogInfo.image,
+        width: 1904,
+        height: 928,
+        alt: `${blogInfo.name}`,
+      },
+    ],
+  },
+
+  // Twitter card metadata
+  twitter: {
+    card: "summary_large_image",
+    title: `${blogInfo.title}`,
+    description: blogInfo.description,
+    creator: blogInfo.twitterHandle,
+    images: [blogInfo.image],
+  },
 };
 
 export default function RootLayout({
